@@ -11,7 +11,6 @@ WidgetDivs.forEach((Div) => {
     <React.StrictMode>
       <App domElement={Div} />
     </React.StrictMode>,
-    Div,
-    document.getElementById('root')
+    Div
   )
 })

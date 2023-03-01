@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-
+import Test from './components/Test'
 // Render each post
 function renderPost(post) {
   const {
@@ -62,6 +62,7 @@ function App({ domElement }) {
 
   return (
     <div className='reddit_widget__app'>
+      <Test />
       <h1 className='reddit_widget__header'>
         Latest posts in{' '}
         <a href={`https://reddit.com/r/${subreddit}`} rel='noopener noreferrer'>
