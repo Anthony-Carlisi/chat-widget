@@ -118,8 +118,12 @@ a.reddit_widget__title:hover {
 }
 
 .chat-window-input {
+  width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  height: 40px;
+  line-height: 20px;
+  padding: 10px;
 }
 
 .fixed {
@@ -129,4 +133,9 @@ a.reddit_widget__title:hover {
   width: 100%;
   display: flex;
   justify-content: end;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }

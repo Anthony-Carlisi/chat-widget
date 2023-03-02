@@ -1,73 +1,76 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
-import Test from './components/Test'
 import ChatIcon from './assets/ChatIcon'
-// Render each post
-function renderPost(post) {
-  const {
-    data: { title, url, author, id },
-  } = post
-  const authorUrl = `https://www.reddit.com/u/${author}`
-
-  return (
-    <div className='reddit_widget__post' key={id}>
-      <div className='reddit_widget__posted_by'>
-        posted by{' '}
-        <a
-          href={authorUrl}
-          className='reddit_widget__posted_by'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          u/{author}
-        </a>
-      </div>
-      <a
-        href={url}
-        className='reddit_widget__title'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        {title}
-      </a>
-    </div>
-  )
-}
+import {
+  minMaxLength,
+  currencyValue,
+  validEmail,
+  findObject,
+  findInArray,
+  numericOnly,
+  lettersOnly,
+  phoneValue,
+  findEmptyValues,
+} from './utils/Validations'
 
 function App({ domElement }) {
-  const subreddit = domElement.getAttribute('data-subreddit')
   const [loading, setLoading] = useState()
   const [error, setError] = useState('')
-  const [data, setData] = useState([])
+  const [messages, setMessages] = useState([])
   const [isActive, setIsActive] = useState(true)
-
-  useEffect(() => {
-    // Fetch data from reddit
-    setLoading(true)
-    fetch(`https://www.reddit.com/r/${subreddit}.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false)
-        setData(data.data.children.slice(0, 10))
-      })
-      .catch((e) => {
-        console.log(e)
-        setLoading(false)
-        setError('error fetching from reddit')
-      })
-  }, [subreddit])
-
-  // const ChatBubble = () => {
-  //   return <div className={isActive ? 'active' : 'inactive'}>test123</div>
-  // }
+  const [toggle, setToggle] = useState(true)
+  const [form, setForm] = useState({})
+  const [formErrors, setFormErrors] = useState({})
 
   const handleToggle = () => {
     setIsActive(!isActive)
   }
 
-  const handleChange = (e) => {
-    // e.preventDefault()
-    console.log(e.target.value)
+  const handleChange = (e, input, field) => {
+    let name = field ? field : e.target.name
+    let value = input ? input : e.target.value
+    let error = ''
+    // Switch for field names
+    switch (name) {
+      case 'name':
+        value = lettersOnly(value)
+        break
+
+      case 'phone':
+        value = numericOnly(value)
+        if (minMaxLength(value, 10)) error = 'Enter valid phone number'
+        value = phoneValue(value)
+        break
+
+      default:
+        break
+    }
+    //Global validation checks
+    if (minMaxLength(value, 1)) {
+      error = 'Cannot be empty'
+    }
+    // Sets Errors
+    if (error) setFormErrors({ ...formErrors, [name]: error })
+    // Deletes Errors
+    if (!error && formErrors[name]) delete formErrors[name]
+    // Sets Values
+    setForm({ ...form, [name]: value })
+  }
+
+  const handleKeyDown = (e) => {
+    console.log(e.target.scrollHeight)
+    console.log(e.target.style.height)
+
+    // e.target.style.height = '40px'
+    // e.target.style.height = `${e.target.scrollHeight}px`
+    const limit = 60
+
+    // In case you have a limitation
+    e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`
+  }
+
+  const newChat = () => {
+    setToggle(!toggle)
   }
 
   return (
@@ -84,27 +87,49 @@ function App({ domElement }) {
         <div className='chat-window-header'>top</div>
         {loading && 'Loading...'}
         {error && error}
-        <div>body</div>
-        <input
-          className='chat-window-input'
-          type='text'
-          onChange={handleChange}
-        />
-        <textarea
-          name=''
-          id=''
-          cols='30'
-          rows='10'
-          onChange={handleChange}
-        ></textarea>
-        <div
-          className='chat-window-input'
-          type='textarea'
-          contentEditable='true'
-          onChange={handleChange}
-        >
-          This is an example text
+
+        {/* new chat form */}
+        <div className={toggle ? '' : 'no-display'}>
+          <div className='flex-column'>
+            <label htmlFor='name'>Enter your full name</label>
+            <input
+              type='text'
+              name='name'
+              onChange={handleChange}
+              value={form.name || ''}
+            />
+          </div>
+          <div className='flex-column'>
+            <label htmlFor='phone'>Enter your phone number</label>
+            <input
+              type='text'
+              name='phone'
+              onChange={handleChange}
+              value={form.phone || ''}
+            />
+          </div>
+          <div className='flex-column'>
+            <label htmlFor='question'>Enter your question</label>
+            <input
+              type='text'
+              name='question'
+              onChange={handleChange}
+              value={form.question || ''}
+            />
+          </div>
+          <button onClick={newChat}>Start Chat</button>
         </div>
+
+        {/* chat window */}
+        <div className={toggle ? 'no-display' : ''}>
+          <textarea
+            className='chat-window-input'
+            // rows='1'
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+
         <button onClick={handleToggle}>toggle</button>
       </div>
     </div>
