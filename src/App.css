@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 .reddit_widget__app {
   font-size: 16px;
   padding: 0;
@@ -68,4 +73,60 @@ a.reddit_widget__title:hover {
 .reddit_widget__powered_by {
   text-align: center;
   font-size: 14px;
+}
+
+.chat-icon {
+  width: 30px;
+  height: 30px;
+}
+.chat-icon-text {
+  color: white;
+  padding-right: 10px;
+  font-size: 18px;
+}
+.chat-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #15538f;
+  border-radius: 30px;
+  padding: 10px;
+  margin: 20px;
+  width: 100px;
+}
+
+.no-display {
+  display: none;
+}
+
+.chat-window-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: antiquewhite;
+  margin: 20px;
+  /* padding: 10px; */
+  border-radius: 10px;
+  height: 600px;
+}
+.chat-window-header {
+  display: flex;
+  align-items: center;
+  background-color: #15538f;
+  height: 60px;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.chat-window-input {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }

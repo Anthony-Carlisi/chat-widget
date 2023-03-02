@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Test from './components/Test'
+import ChatIcon from './assets/ChatIcon'
 // Render each post
 function renderPost(post) {
   const {
@@ -33,16 +34,12 @@ function renderPost(post) {
   )
 }
 
-// Filter, since reddit always returns stickied posts up top
-function nonStickiedOnly(post) {
-  return !post.data.stickied
-}
-
 function App({ domElement }) {
   const subreddit = domElement.getAttribute('data-subreddit')
   const [loading, setLoading] = useState()
   const [error, setError] = useState('')
   const [data, setData] = useState([])
+  const [isActive, setIsActive] = useState(true)
 
   useEffect(() => {
     // Fetch data from reddit
@@ -60,33 +57,72 @@ function App({ domElement }) {
       })
   }, [subreddit])
 
+  // const ChatBubble = () => {
+  //   return <div className={isActive ? 'active' : 'inactive'}>test123</div>
+  // }
+
+  const handleToggle = () => {
+    setIsActive(!isActive)
+  }
+
+  const handleChange = (e) => {
+    // e.preventDefault()
+    console.log(e.target.value)
+  }
+
   return (
-    <div className='reddit_widget__app'>
-      <Test />
-      <h1 className='reddit_widget__header'>
-        Latest posts in{' '}
-        <a href={`https://reddit.com/r/${subreddit}`} rel='noopener noreferrer'>
-          /r/{subreddit}
-        </a>
-      </h1>
-      <div className='reddit_widget__inner'>
+    <div className='fixed'>
+      <div
+        onClick={handleToggle}
+        className={isActive ? 'chat-icon-wrapper' : 'no-display'}
+      >
+        <div className='chat-icon-text'>Chat</div>
+        <ChatIcon className='chat-icon' alt='chat-icon' />
+      </div>
+
+      <div className={isActive ? 'no-display' : 'chat-window-container'}>
+        <div className='chat-window-header'>top</div>
         {loading && 'Loading...'}
         {error && error}
-        {!!data.length && data.filter(nonStickiedOnly).map(renderPost)}
-      </div>
-      <p className='reddit_widget__powered_by'>
-        This widget is powered by{' '}
-        <a
-          href='https://javascriptpros.com'
-          rel='noopener noreferrer'
-          target='_blank'
+        <div>body</div>
+        <input
+          className='chat-window-input'
+          type='text'
+          onChange={handleChange}
+        />
+        <textarea
+          name=''
+          id=''
+          cols='30'
+          rows='10'
+          onChange={handleChange}
+        ></textarea>
+        <div
+          className='chat-window-input'
+          type='textarea'
+          contentEditable='true'
+          onChange={handleChange}
         >
-          JavaScriptPros.com
-        </a>
-        <div>test</div>
-      </p>
+          This is an example text
+        </div>
+        <button onClick={handleToggle}>toggle</button>
+      </div>
     </div>
   )
+  // return (
+  //   <div>
+  //     <div className={isActive ? 'active' : 'inactive'}>Chat with us</div>
+  //     <ChatIcon className='chat-icon' alt='chat-icon' />
+  //     <h1>Test Header</h1>
+  //     <div className={!isActive ? 'active' : 'inactive'}>
+  //       {loading && 'Loading...'}
+  //       {error && error}
+  //       <div>Test body</div>
+  //     </div>
+  //     <button onClick={handleToggle}>toggle</button>
+  //     <p>footer</p>
+  //   </div>
+  // )
 }
 
 export default App
