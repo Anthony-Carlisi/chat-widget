@@ -11,22 +11,22 @@ import {
 
 function App({ domElement }) {
   const [loading, setLoading] = useState()
-  const [error, setError] = useState('')
   const [messages, setMessages] = useState([])
+  const [message, setMessage] = useState([])
   const [isActive, setIsActive] = useState(true)
   const [toggle, setToggle] = useState(true)
   const [form, setForm] = useState({})
   const [formErrors, setFormErrors] = useState({
     name: '',
     phone: '',
-    message: '',
+    question: '',
   })
 
   const handleToggle = () => {
     setIsActive(!isActive)
   }
 
-  const handleChange = (e, input, field) => {
+  const handleChange = (e) => {
     const name = e.target.name
     let value = e.target.value
     let error = ''
@@ -59,17 +59,24 @@ function App({ domElement }) {
 
   const startChat = () => {
     // Add emitter here and post form results
+    setMessages([...messages, form.question])
     setToggle(!toggle)
+  }
+
+  const submitMessage = (e) => {
+    setMessages([...messages, message])
+    setMessage('')
   }
 
   const autosize = (e) => {
     const { currentTarget } = e
     setTimeout(() => {
-      // currentTarget.style.height = 'auto'
-      // currentTarget.style.padding = '0'
       currentTarget.style = 'height:auto;padding:0'
       currentTarget.style = 'height:' + currentTarget.scrollHeight + 'px'
     }, 0)
+  }
+  const handleMessage = (e) => {
+    setMessage(e.target.value)
   }
 
   return (
@@ -94,7 +101,6 @@ function App({ domElement }) {
           />
         </div>
         {loading && 'Loading...'}
-        {error && error}
 
         {/* Chat Form */}
         <div className={toggle ? '' : 'no-display'}>
@@ -127,19 +133,19 @@ function App({ domElement }) {
           </div>
           {/* Message */}
           <div className='flex-column'>
-            <label className='input-label' htmlFor='message'>
+            <label className='input-label' htmlFor='question'>
               Message
             </label>
             <textarea
               className='textarea'
               rows='1'
               type='text'
-              name='message'
+              name='question'
               onChange={handleChange}
               onKeyDown={autosize}
-              value={form.message || ''}
+              value={form.question || ''}
             ></textarea>
-            <p className='input-error'>{formErrors.message}</p>
+            <p className='input-error'>{formErrors.question}</p>
           </div>
           <div className='flex-center'>
             <button
@@ -153,12 +159,21 @@ function App({ domElement }) {
         </div>
 
         {/* Chat Body */}
+        {messages.map((message, key) => {
+          return <div key={key}>{message}</div>
+        })}
         <div className={toggle ? 'no-display' : ''}>
           <textarea
             className='textarea'
-            onChange={handleChange}
+            name=''
+            onChange={handleMessage}
             onKeyDown={autosize}
+            rows='1'
+            value={message}
           ></textarea>
+          <button disabled={!message} onClick={submitMessage}>
+            Test
+          </button>
         </div>
       </div>
     </div>
