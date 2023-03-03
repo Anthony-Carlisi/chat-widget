@@ -1,16 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import ChatIcon from './assets/ChatIcon'
+import { ChatIcon, DownArrow } from './assets/Icons'
+import Input from './components/Input'
 import {
   minMaxLength,
-  currencyValue,
-  validEmail,
-  findObject,
-  findInArray,
   numericOnly,
   lettersOnly,
   phoneValue,
-  findEmptyValues,
 } from './utils/Validations'
 
 function App({ domElement }) {
@@ -20,15 +16,19 @@ function App({ domElement }) {
   const [isActive, setIsActive] = useState(true)
   const [toggle, setToggle] = useState(true)
   const [form, setForm] = useState({})
-  const [formErrors, setFormErrors] = useState({})
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    phone: '',
+    message: '',
+  })
 
   const handleToggle = () => {
     setIsActive(!isActive)
   }
 
   const handleChange = (e, input, field) => {
-    let name = field ? field : e.target.name
-    let value = input ? input : e.target.value
+    const name = e.target.name
+    let value = e.target.value
     let error = ''
     // Switch for field names
     switch (name) {
@@ -52,102 +52,117 @@ function App({ domElement }) {
     // Sets Errors
     if (error) setFormErrors({ ...formErrors, [name]: error })
     // Deletes Errors
-    if (!error && formErrors[name]) delete formErrors[name]
+    if (!error && formErrors.hasOwnProperty(name)) delete formErrors[name]
     // Sets Values
     setForm({ ...form, [name]: value })
   }
 
-  const handleKeyDown = (e) => {
-    console.log(e.target.scrollHeight)
-    console.log(e.target.style.height)
-
-    // e.target.style.height = '40px'
-    // e.target.style.height = `${e.target.scrollHeight}px`
-    const limit = 60
-
-    // In case you have a limitation
-    e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`
+  const startChat = () => {
+    // Add emitter here and post form results
+    setToggle(!toggle)
   }
 
-  const newChat = () => {
-    setToggle(!toggle)
+  const autosize = (e) => {
+    const { currentTarget } = e
+    setTimeout(() => {
+      // currentTarget.style.height = 'auto'
+      // currentTarget.style.padding = '0'
+      currentTarget.style = 'height:auto;padding:0'
+      currentTarget.style = 'height:' + currentTarget.scrollHeight + 'px'
+    }, 0)
   }
 
   return (
     <div className='fixed'>
+      {/* Chat box start */}
       <div
         onClick={handleToggle}
         className={isActive ? 'chat-icon-wrapper' : 'no-display'}
       >
-        <div className='chat-icon-text'>Chat</div>
+        <h3 className='chat-icon-text'>Chat</h3>
         <ChatIcon className='chat-icon' alt='chat-icon' />
       </div>
 
+      {/* Chat header */}
       <div className={isActive ? 'no-display' : 'chat-window-container'}>
-        <div className='chat-window-header'>top</div>
+        <div className='chat-window-header'>
+          <h2 className='chat-window-header-text'> Get in touch</h2>
+          <DownArrow
+            className='chat-window-header-icon'
+            alt='chat-icon-downarrow'
+            onClick={handleToggle}
+          />
+        </div>
         {loading && 'Loading...'}
         {error && error}
 
-        {/* new chat form */}
+        {/* Chat Form */}
         <div className={toggle ? '' : 'no-display'}>
           <div className='flex-column'>
-            <label htmlFor='name'>Enter your full name</label>
+            <label className='input-label' htmlFor='phone'>
+              Name
+            </label>
             <input
+              className='input'
               type='text'
               name='name'
               onChange={handleChange}
               value={form.name || ''}
             />
+            <p className='input-error'>{formErrors.name}</p>
           </div>
+          {/* Phone */}
           <div className='flex-column'>
-            <label htmlFor='phone'>Enter your phone number</label>
+            <label className='input-label' htmlFor='phone'>
+              Phone
+            </label>
             <input
+              className='input'
               type='text'
               name='phone'
               onChange={handleChange}
               value={form.phone || ''}
             />
+            <p className='input-error'>{formErrors.phone}</p>
           </div>
+          {/* Message */}
           <div className='flex-column'>
-            <label htmlFor='question'>Enter your question</label>
-            <input
+            <label className='input-label' htmlFor='message'>
+              Message
+            </label>
+            <textarea
+              className='textarea'
+              rows='1'
               type='text'
-              name='question'
+              name='message'
               onChange={handleChange}
-              value={form.question || ''}
-            />
+              onKeyDown={autosize}
+              value={form.message || ''}
+            ></textarea>
+            <p className='input-error'>{formErrors.message}</p>
           </div>
-          <button onClick={newChat}>Start Chat</button>
+          <div className='flex-center'>
+            <button
+              className='input-button flex-center'
+              disabled={Object.keys(formErrors).length !== 0}
+              onClick={startChat}
+            >
+              <h3> Start Chat</h3>
+            </button>
+          </div>
         </div>
 
-        {/* chat window */}
+        {/* Chat Body */}
         <div className={toggle ? 'no-display' : ''}>
           <textarea
-            className='chat-window-input'
-            // rows='1'
-            onKeyDown={handleKeyDown}
+            className='textarea'
             onChange={handleChange}
+            onKeyDown={autosize}
           ></textarea>
         </div>
-
-        <button onClick={handleToggle}>toggle</button>
       </div>
     </div>
   )
-  // return (
-  //   <div>
-  //     <div className={isActive ? 'active' : 'inactive'}>Chat with us</div>
-  //     <ChatIcon className='chat-icon' alt='chat-icon' />
-  //     <h1>Test Header</h1>
-  //     <div className={!isActive ? 'active' : 'inactive'}>
-  //       {loading && 'Loading...'}
-  //       {error && error}
-  //       <div>Test body</div>
-  //     </div>
-  //     <button onClick={handleToggle}>toggle</button>
-  //     <p>footer</p>
-  //   </div>
-  // )
 }
 
 export default App

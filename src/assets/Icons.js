@@ -1,4 +1,4 @@
-const ChatIcon = ({ className, ...props }) => {
+export const ChatIcon = ({ className, ...props }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -17,4 +17,17 @@ const ChatIcon = ({ className, ...props }) => {
   )
 }
 
-export default ChatIcon
+export const DownArrow = ({ className, ...props }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='256'
+      height='256'
+      viewBox='0 0 30 30'
+      {...props}
+      className={className}
+    >
+      <path d='M24.99 8.986a1 1 0 00-.697.307L15 18.586 5.707 9.293a1 1 0 00-.717-.303 1 1 0 00-.697 1.717l10 10a1 1 0 001.414 0l10-10a1 1 0 00-.717-1.72z'></path>
+    </svg>
+  )
+}
