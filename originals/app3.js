@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Widget from './components/Widget'
 import Chat from './components/Chat'
-import Form from './components/Form'
-import { ChatIcon, DownArrow } from './assets/Icons'
 import { useState } from 'react'
-
+import './App.css'
+import { ChatIcon, DownArrow } from './assets/Icons'
+import { Form } from 'react-router-dom'
 const App = () => {
   const [isActive, setIsActive] = useState(true)
 
@@ -35,14 +34,15 @@ const App = () => {
             />
           </div>
           {/* Chat Body */}
-          <Routes>
-            <Route path='/' element={<Form />} />
-            {/* <Route index element={<Form />} /> */}
-            <Route path='/chat' element={<Chat />} />
-          </Routes>
+          <div>
+            <Routes>
+              <Route path='/' element={<Form />}></Route>
+              <Route path='/chat' element={<Chat />}></Route>
+            </Routes>
+          </div>
         </div>
       </div>
-    </BrowserRouter>
+    {/* </BrowserRouter> */}
   )
 }
 
