@@ -1,5 +1,5 @@
 import '../App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   minMaxLength,
   numericOnly,
@@ -18,9 +18,9 @@ const Form = () => {
   })
 
   // redirect if form is filled to chat
-  if (sessionStorage.getItem('form')) {
-    navigate('/chat')
-  }
+  useEffect(() => {
+    sessionStorage.getItem('form') && navigate('/chat')
+  })
 
   const handleChange = (e) => {
     const name = e.target.name

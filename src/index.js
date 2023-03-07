@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './App'
 
 // Create div in index
@@ -10,13 +10,13 @@ Div.className = 'chat-widget'
 
 // Add div to html
 document.body.appendChild(Div)
+const root = createRoot(Div)
 
 // Inject our React App into each
 if (Div) {
-  ReactDOM.render(
+  root.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>,
-    Div
+    </React.StrictMode>
   )
 }
