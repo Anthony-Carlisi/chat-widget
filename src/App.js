@@ -35,12 +35,11 @@ const App = () => {
               onClick={handleToggle}
             />
           </div>
-          <div>1000</div>
-          <button>5163034649</button>
           <Link to='/'>Home</Link>
           {/* Chat Body */}
+          <Form />
           <Routes>
-            <Route index element={<Form />} />
+            <Route path='/' element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
           <div>
