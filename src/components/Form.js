@@ -66,6 +66,7 @@ const Form = () => {
         <label className='input-label' htmlFor='phone'>
           Name
         </label>
+        <div>test</div>
         <input
           className='input'
           type='text'
