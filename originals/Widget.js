@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../App.css'
-import { ChatIcon, DownArrow } from '../assets/Icons'
-import Form from './Form'
+import { ChatIcon, DownArrow } from '../src/assets/Icons'
+import Form from '../src/components/Form'
 
 const Widget = () => {
   const [isActive, setIsActive] = useState(true)

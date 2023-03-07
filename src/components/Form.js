@@ -57,7 +57,7 @@ const Form = () => {
   }
 
   const handleSubmit = () => {
-    navigate('/chat', { message: form.question })
+    navigate('/chat', { state: { message: form.question } })
   }
 
   return (

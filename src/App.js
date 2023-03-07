@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Widget from './components/Widget'
 import Chat from './components/Chat'
 import Form from './components/Form'
 import { ChatIcon, DownArrow } from './assets/Icons'
 import { useState } from 'react'
+import socketIO from 'socket.io-client'
+const socket = socketIO.connect('http://localhost:4000')
 
 const App = () => {
   const [isActive, setIsActive] = useState(true)
@@ -37,7 +38,7 @@ const App = () => {
           {/* Chat Body */}
           <Routes>
             <Route path='/' element={<Form />} />
-            <Route path='/chat' element={<Chat />} />
+            <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
         </div>
       </div>
