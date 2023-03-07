@@ -38,7 +38,7 @@ const App = () => {
           {/* Chat Body */}
           <div>test 12</div>
           <Routes>
-            <Route path='/' element={<Form />} />
+            <Route path='/' component={<Form />} />
             <Route exact path='/' element={<Form />} />
             <Route index element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
