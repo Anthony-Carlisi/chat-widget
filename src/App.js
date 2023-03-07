@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, MemoryRouter } from 'react-router-dom'
 import Chat from './components/Chat'
 import Form from './components/Form'
 import { ChatIcon, DownArrow } from './assets/Icons'
@@ -18,7 +18,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <div className='fixed'>
         {/* Chat box start */}
         <div
@@ -40,14 +40,14 @@ const App = () => {
             />
           </div>
           {/* Chat Body */}
-          <div>test 16</div>
+          <div>test 17</div>
           <Routes>
             <Route path='/' element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
         </div>
       </div>
-    </BrowserRouter>
+    </MemoryRouter>
   )
 }
 
