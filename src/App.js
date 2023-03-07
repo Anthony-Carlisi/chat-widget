@@ -16,18 +16,10 @@ const App = ({ domElement }) => {
   const [isActive, setIsActive] = useState(true)
   const [toggle, setToggle] = useState(true)
   const [form, setForm] = useState({})
-  const [connected, setConnected] = useState(false)
   const [formErrors, setFormErrors] = useState({
     name: '',
     phone: '',
     question: '',
-  })
-
-  socket.on('connect', () => {
-    setConnected(socket.connected)
-  })
-  socket.on('disconnected', () => {
-    setConnected(socket.connected)
   })
 
   const handleSendMessage = (e) => {
@@ -119,68 +111,62 @@ const App = ({ domElement }) => {
           />
         </div>
         {loading && 'Loading...'}
-
         {/* Chat Form */}
-        {connected ? (
-          <div className={toggle ? '' : 'no-display'}>
-            <div className='flex-column'>
-              <label className='input-label' htmlFor='phone'>
-                Name
-              </label>
-              <input
-                className='input'
-                type='text'
-                name='name'
-                onChange={handleChange}
-                value={form.name || ''}
-              />
-              <p className='input-error'>{formErrors.name}</p>
-            </div>
-            {/* Phone */}
-            <div className='flex-column'>
-              <label className='input-label' htmlFor='phone'>
-                Phone
-              </label>
-              <input
-                className='input'
-                type='text'
-                name='phone'
-                onChange={handleChange}
-                value={form.phone || ''}
-              />
-              <p className='input-error'>{formErrors.phone}</p>
-            </div>
-            {/* Message */}
-            <div className='flex-column'>
-              <label className='input-label' htmlFor='question'>
-                Message
-              </label>
-              <textarea
-                className='textarea'
-                rows='1'
-                type='text'
-                name='question'
-                onChange={handleChange}
-                onKeyDown={autosize}
-                value={form.question || ''}
-              ></textarea>
-              <p className='input-error'>{formErrors.question}</p>
-            </div>
-            <div className='flex-center'>
-              <button
-                className='input-button flex-center'
-                disabled={Object.keys(formErrors).length !== 0}
-                onClick={startChat}
-              >
-                <h3> Start Chat</h3>
-              </button>
-            </div>
+        <div className={toggle ? '' : 'no-display'}>
+          <div className='flex-column'>
+            <label className='input-label' htmlFor='phone'>
+              Name
+            </label>
+            <input
+              className='input'
+              type='text'
+              name='name'
+              onChange={handleChange}
+              value={form.name || ''}
+            />
+            <p className='input-error'>{formErrors.name}</p>
           </div>
-        ) : (
-          <div>404</div>
-        )}
-
-        {/* Chat Body */}
+          {/* Phone */}
+          <div className='flex-column'>
+            <label className='input-label' htmlFor='phone'>
+              Phone
+            </label>
+            <input
+              className='input'
+              type='text'
+              name='phone'
+              onChange={handleChange}
+              value={form.phone || ''}
+            />
+            <p className='input-error'>{formErrors.phone}</p>
+          </div>
+          {/* Message */}
+          <div className='flex-column'>
+            <label className='input-label' htmlFor='question'>
+              Message
+            </label>
+            <textarea
+              className='textarea'
+              rows='1'
+              type='text'
+              name='question'
+              onChange={handleChange}
+              onKeyDown={autosize}
+              value={form.question || ''}
+            ></textarea>
+            <p className='input-error'>{formErrors.question}</p>
+          </div>
+          <div className='flex-center'>
+            <button
+              className='input-button flex-center'
+              disabled={Object.keys(formErrors).length !== 0}
+              onClick={startChat}
+            >
+              <h3> Start Chat</h3>
+            </button>
+          </div>
+        </div>
+        ={/* Chat Body */}
         {messages.map((message, key) => {
           return <div key={key}>{message}</div>
         })}
