@@ -35,6 +35,9 @@ const App = () => {
               onClick={handleToggle}
             />
           </div>
+          <div>1000</div>
+          <button>5163034649</button>
+          <Link to='/'>Home</Link>
           {/* Chat Body */}
           <Routes>
             <Route path='/' element={<Form />} />
