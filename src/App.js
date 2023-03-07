@@ -37,7 +37,6 @@ const App = () => {
           {/* Chat Body */}
           <Routes>
             <Route path='/' element={<Form />} />
-            {/* <Route index element={<Form />} /> */}
             <Route path='/chat' element={<Chat />} />
           </Routes>
         </div>
