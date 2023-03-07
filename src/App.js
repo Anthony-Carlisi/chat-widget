@@ -40,7 +40,7 @@ const App = () => {
           <Link to='/'>Home</Link>
           {/* Chat Body */}
           <Routes>
-            <Route path='/' element={<Form />} />
+            <Route index element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
           <div>
