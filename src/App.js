@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Chat from './components/Chat'
 import Form from './components/Form'
 import { ChatIcon, DownArrow } from './assets/Icons'
@@ -36,6 +36,7 @@ const App = () => {
             />
           </div>
           {/* Chat Body */}
+          <Link to='/'>Test1</Link>
           <Routes>
             <Route path='/' component={<Form />} />
             <Route exact path='/' element={<Form />} />
