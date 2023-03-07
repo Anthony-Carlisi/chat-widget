@@ -1,7 +1,7 @@
 * {
-  box-sizing: border-box;
+  /* box-sizing: border-box;
   padding: 0;
-  margin: 0;
+  margin: 0; */
   font-family: sans-serif;
 }
 
@@ -75,6 +75,10 @@
   font-size: 16px;
 }
 
+.input-error {
+  margin: 0;
+}
+
 .input-error:empty::before {
   content: '\A0';
 }
@@ -123,4 +127,8 @@
   border-radius: 20px;
   width: 268px;
   max-height: 184px;
+}
+
+h3 {
+  margin: 0;
 }
