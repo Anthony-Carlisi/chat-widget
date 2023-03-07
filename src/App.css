@@ -55,6 +55,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  z-index: 100000000000;
 }
 
 .chat-window-header-text {

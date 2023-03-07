@@ -36,11 +36,11 @@ const App = () => {
             />
           </div>
           {/* Chat Body */}
-          <div>test 12</div>
+          <div>test 13</div>
           <Routes>
-            <Route path='/' component={<Form />} />
-            <Route exact path='/' element={<Form />} />
-            <Route index element={<Form />} />
+            <Route path='/' element={<Form />} />
+            {/* <Route exact path='/' element={<Form />} />
+            <Route index element={<Form />} /> */}
             <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
         </div>
