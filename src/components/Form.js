@@ -57,6 +57,7 @@ const Form = () => {
   }
 
   const handleSubmit = () => {
+    sessionStorage.setItem('form', JSON.stringify(form))
     navigate('/chat', { state: { message: form.question } })
   }
 
