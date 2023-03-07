@@ -17,6 +17,11 @@ const Form = () => {
     question: '',
   })
 
+  // redirect if form is filled to chat
+  if (sessionStorage.getItem('form')) {
+    navigate('/chat')
+  }
+
   const handleChange = (e) => {
     const name = e.target.name
     let value = e.target.value
