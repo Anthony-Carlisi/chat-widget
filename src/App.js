@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { io } from 'socket.io-client'
 
 // const socket = socketIO.connect('http://localhost:4000')
-const URL = 'https://4f40-173-56-26-98.ngrok.io'
+const URL = 'http://localhost:4000'
 const socket = io(URL, { autoConnect: false })
 
 const App = () => {
