@@ -2,20 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 
-// Find all widget divs
+// Create div in index
+const Div = document.createElement('div')
 
-let div = document.createElement('div')
-div.className = 'chat-widget'
+// Assign class name to widget
+Div.className = 'chat-widget'
 
-document.body.appendChild(div)
-const WidgetDivs = document.querySelectorAll('.chat-widget')
+// Add div to html
+document.body.appendChild(Div)
 
 // Inject our React App into each
-WidgetDivs.forEach((Div) => {
+if (Div) {
   ReactDOM.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>,
     Div
   )
-})
+}

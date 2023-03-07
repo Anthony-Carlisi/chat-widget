@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Chat from './components/Chat'
 import Form from './components/Form'
 import { ChatIcon, DownArrow } from './assets/Icons'
@@ -35,16 +35,13 @@ const App = () => {
               onClick={handleToggle}
             />
           </div>
-          <Link to='/'>Home</Link>
           {/* Chat Body */}
-          <Form />
           <Routes>
             <Route path='/' element={<Form />} />
+            <Route exact path='/' element={<Form />} />
+            <Route index element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
           </Routes>
-          <div>
-            <Link to='/'>Home</Link>
-          </div>
         </div>
       </div>
     </BrowserRouter>

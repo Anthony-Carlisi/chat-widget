@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "buffer": "^5.7.1"
+    "buffer": "^5.7.1",
+    "webpack": "^5.75.0"
   }
 }
