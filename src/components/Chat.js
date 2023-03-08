@@ -35,8 +35,7 @@ const Chat = ({ socket }) => {
   })
 
   const handleClick = () => {
-    socket.emit('intialMessage', { hello: 'world' })
-    socket.emit('create', socket.id)
+    socket.emit('message', { hello: 'world' })
   }
 
   return (
