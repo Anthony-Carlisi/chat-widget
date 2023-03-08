@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 
@@ -15,8 +15,8 @@ const root = createRoot(Div)
 // Inject our React App into each
 if (Div) {
   root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    // <React.StrictMode>
+    <App />
+    // </React.StrictMode>
   )
 }

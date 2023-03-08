@@ -8,31 +8,41 @@ const Chat = ({ socket }) => {
   // const { message } = location.state
   const navigate = useNavigate()
   const [messages, setMessages] = useState([])
-
-  // Make sure the Socket is connected
-  if (!socket.socket) {
-    socket.connect()
-  }
+  const [connected, setConnected] = useState([])
 
   // redirect if form not filled out
   if (!sessionStorage.getItem('form')) {
     console.log('no form')
     navigate('/')
   }
+  socket.connect()
 
-  useEffect(() => {
-    // if (!socket.socket) {
-    socket.connect()
-    // }
-    // Sends roomId to server
-    socket.on('connect', function () {
-      socket.emit('create', uuidv4())
-    })
-
-    // Update the document title using the browser API
-    // socket.emit('intialMessage', { text: message })
-    // socket.connect()
+  // On connection create room using UUID only once
+  socket.once('connect', () => {
+    const id = sessionStorage.getItem('id')
+      ? sessionStorage.getItem('id')
+      : uuidv4()
+    socket.emit('join', id)
+    !sessionStorage.getItem('id') &&
+      sessionStorage.setItem('id', JSON.stringify(id))
   })
+
+  // On connection error redirect to error apge
+  socket.on('connect_error', () => {
+    navigate('/error')
+    console.log('connect error')
+  })
+
+  // // If socket not connected
+  // if (!socket.socket) {
+  //   // socket.disconnect()
+  //   navigate('/error')
+  //   console.log('not connected')
+  // }
+
+  const handleError = () => {
+    navigate('/error')
+  }
 
   const handleClick = () => {
     socket.emit('message', { hello: 'world' })
@@ -40,7 +50,8 @@ const Chat = ({ socket }) => {
 
   return (
     <div>
-      <button onClick={handleClick}>test</button>
+      <button onClick={handleClick}>Send Message</button>
+      <button onClick={handleError}>Redirect to error</button>
     </div>
   )
 }

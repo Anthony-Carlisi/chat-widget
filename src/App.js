@@ -1,13 +1,14 @@
 import { Routes, Route, MemoryRouter } from 'react-router-dom'
 import Chat from './components/Chat'
 import Form from './components/Form'
+import Error from './components/Error'
 import { ChatIcon, DownArrow } from './assets/Icons'
 import { useState } from 'react'
 // import socketIO from 'socket.io-client'
 import { io } from 'socket.io-client'
 
 // const socket = socketIO.connect('http://localhost:4000')
-const URL = 'https://a885-173-2-48-127.ngrok.io'
+const URL = 'http://localhost:4000'
 const socket = io(URL, { autoConnect: false })
 
 const App = () => {
@@ -40,10 +41,11 @@ const App = () => {
             />
           </div>
           {/* Chat Body */}
-          <div>test 18</div>
+          {/* <div>test 18</div> */}
           <Routes>
             <Route path='/' element={<Form />} />
             <Route path='/chat' element={<Chat socket={socket} />} />
+            <Route path='/error' element={<Error socket={socket} />} />
           </Routes>
         </div>
       </div>
