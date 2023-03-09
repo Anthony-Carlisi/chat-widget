@@ -12,10 +12,13 @@ const URL = 'http://localhost:4000'
 const socket = io(URL, { autoConnect: false })
 
 const App = () => {
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(
+    JSON.parse(sessionStorage.getItem('isActive'))
+  )
 
   const handleToggle = () => {
     setIsActive(!isActive)
+    sessionStorage.setItem('isActive', JSON.stringify(!isActive))
   }
 
   return (
@@ -24,14 +27,14 @@ const App = () => {
         {/* Chat box start */}
         <div
           onClick={handleToggle}
-          className={isActive ? 'chat-icon-wrapper' : 'no-display'}
+          className={!isActive ? 'chat-icon-wrapper' : 'no-display'}
         >
           <h3 className='chat-icon-text'>Chat</h3>
           <ChatIcon className='chat-icon' alt='chat-icon' />
         </div>
 
         {/* Chat header */}
-        <div className={isActive ? 'no-display' : 'chat-window-container'}>
+        <div className={!isActive ? 'no-display' : 'chat-window-container'}>
           <div className='chat-window-header'>
             <h2 className='chat-window-header-text'> Get in touch</h2>
             <DownArrow

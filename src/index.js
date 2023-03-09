@@ -16,7 +16,9 @@ const root = createRoot(Div)
 if (Div) {
   root.render(
     // <React.StrictMode>
-    <App />
+    <>
+      <App />
+    </>
     // </React.StrictMode>
   )
 }

@@ -61,13 +61,15 @@ const Form = () => {
     }, 0)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     sessionStorage.setItem('form', JSON.stringify(form))
-    navigate('/chat', { state: { message: form.question } })
+    navigate('/chat', { question: form.question })
   }
 
   return (
     <div>
+      {/* Name */}
       <div className='flex-column'>
         <label className='input-label' htmlFor='phone'>
           Name
